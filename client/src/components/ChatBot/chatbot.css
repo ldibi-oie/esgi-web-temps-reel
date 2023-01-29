@@ -1,0 +1,15 @@
+.first-plan
+{
+    position:fixed;
+    bottom: 0;
+    right: 0;
+    
+}
+
+.custom-around
+{
+    border-top-right-radius: 40px;
+    border-top-left-radius: 40px;
+    width: 400px;
+}
+ 
