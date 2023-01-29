@@ -137,16 +137,30 @@ socketIO.on('connection', (socket) => {
         socketIO.emit('chatbotResponse' , reponse)
 
         break;
-      case 'verify_year':
+      case 'verify_year_date_less':
         var reponse = [{
           uid : "chatbot",
           name: "MotorService Bot",
-          message: "Quelle est la date de dernier entretien de la moto ?",
+          message: "Donner le nombre de kilomètres parcourus depuis le dernier entretien",
           type: "text",
           value: "verify_year"
+        },
+        {
+          uid : "chatbot",
+          name: "MotorService Bot",
+          message: "supérieur ou égal à 10000 kilometres",
+          type: "button",
+          value: "km_more"
+        },
+        {
+          uid : "chatbot",
+          name: "MotorService Bot",
+          message: "inférieur à 10000 kilometres",
+          type: "button",
+          value: "km_less"
         }]
-
         socketIO.emit('chatbotResponse' , reponse)
+
         break;
       case 'infos_contact':
         var reponse = [{
@@ -162,6 +176,70 @@ socketIO.on('connection', (socket) => {
           message: "souhaite un numéro de téléphone",
           type: "button",
           value: "numero"
+        }]
+        socketIO.emit('chatbotResponse' , reponse)
+
+        break;
+      case 'infos_vehicule':
+        var reponse = [{
+          uid : "chatbot",
+          name: "MotorService Bot",
+          message: "Quel type d'usage ? ",
+          type: "text",
+          value: "text"
+        },
+        {
+          uid : "chatbot",
+          name: "MotorService Bot",
+          message: "Routier",
+          type: "button",
+          value: "rdv"
+        },
+        {
+          uid : "chatbot",
+          name: "MotorService Bot",
+          message: "Tout-terrain",
+          type: "button",
+          value: "rdv"
+        },
+        {
+          uid : "chatbot",
+          name: "MotorService Bot",
+          message: "Sportif",
+          type: "button",
+          value: "rdv"
+        }]
+        socketIO.emit('chatbotResponse' , reponse)
+
+        break;
+      case 'rdv':
+        var reponse = [{
+          uid : "chatbot",
+          name: "MotorService Bot",
+          message: "Vous pouvez faire un essai , voici les disponibilités pour cette semaine : choisissez ",
+          type: "text",
+          value: "text"
+        },
+        {
+          uid : "chatbot",
+          name: "MotorService Bot",
+          message: "demain",
+          type: "button",
+          value: "saved"
+        },
+        {
+          uid : "chatbot",
+          name: "MotorService Bot",
+          message: "apres-demain",
+          type: "button",
+          value: "saved"
+        },
+        {
+          uid : "chatbot",
+          name: "MotorService Bot",
+          message: "aujourd'hui",
+          type: "button",
+          value: "saved"
         }]
         socketIO.emit('chatbotResponse' , reponse)
 
@@ -188,7 +266,65 @@ socketIO.on('connection', (socket) => {
         socketIO.emit('chatbotResponse' , reponse)
 
         break;
-      default:
+      case 'km_less':
+        var reponse = [{
+          uid : "chatbot",
+          name: "MotorService Bot",
+          message: "Souhaitez vous reviser votre vehicule ?",
+          type: "text",
+          value: "verify_year_date"
+        }, {
+          uid : "chatbot",
+          name: "MotorService Bot",
+          message: "Oui",
+          type: "button",
+          value: "yes"
+        },
+        {
+          uid : "chatbot",
+          name: "MotorService Bot",
+          message: "Non",
+          type: "button",
+          value: "no"
+        }]
+        console.log(reponse)
+
+        socketIO.emit('chatbotResponse' , reponse)
+        break;
+      case 'no':
+        var reponse = [
+          {
+            uid: "chatbot",
+            name: "MotorService Bot",
+            message: "Cliquez pour commencer",
+            type: "button",
+            value: "start",
+          }
+        ]
+        socketIO.emit('chatbotClose' , reponse)
+        break;
+      case 'saved':
+        var reponse = [
+          {
+            uid: "chatbot",
+            name: "MotorService Bot",
+            message: "RDV bien enregistré ! ",
+            type: "text",
+            value: "start",
+          }
+          ,
+          {
+            uid: "chatbot",
+            name: "MotorService Bot",
+            message: "Recommencer",
+            type: "button",
+            value: "close",
+          }
+        ]
+        socketIO.emit('chatbotClose' , reponse)
+        break;
+        
+        default:
         console.log(`Sorry, we are out of ${value}.`);
     }
     
@@ -196,9 +332,39 @@ socketIO.on('connection', (socket) => {
 
   
 
-  socket.on('chatbotFooter' , (value) => {
-    console.log("value : " + JSON.stringify(value))
-    socketIO.emit('chatbotResponse' , [value.rep])
+  socket.on('chatbotFooter' , (val) => {
+    console.log("value : " + JSON.stringify(val))
+    var date;
+    switch (val) {
+      case 'verify_year':
+        var reponse = [{
+          uid : "chatbot",
+          name: "MotorService Bot",
+          message: "Quelle est la date de dernier entretien de la moto ?",
+          type: "text",
+          value: "verify_year_date"
+        }, {
+          uid : "chatbot",
+          name: "MotorService Bot",
+          message: "< 1 an",
+          type: "button",
+          value: "verify_year_date_more"
+        },
+        {
+          uid : "chatbot",
+          name: "MotorService Bot",
+          message: "> 1 an",
+          type: "button",
+          value: "verify_year_date_less"
+        }]
+        console.log(reponse)
+
+        socketIO.emit('chatbotResponse' , reponse)
+      break;
+      
+      default:
+        console.log(`Sorry, we are out of ${val}.`);
+    }
   })
 
   socket.on('disconnect', () => {

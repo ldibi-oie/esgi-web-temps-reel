@@ -27,9 +27,6 @@ const ChatBody = ({ socket , messages , user , receiver = null , room = null  , 
 
   return (
     <div style={{display: receiver === null ? 'none' : ''}}>
-      {
-        JSON.stringify(users)
-      }
       <div className="relative flex items-center p-3 border-b border-gray-300">
         <img className="object-cover w-10 h-10 rounded-full"
           src={receiver === null ? 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1024px-Default_pfp.svg.png' : 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1024px-Default_pfp.svg.png'} alt="username" />

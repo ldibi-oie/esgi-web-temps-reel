@@ -67,6 +67,7 @@ export default function Home({socket}) {
       }
       getAllUsers()
       getSessions()
+      socket.emit('newUser', user.uid);
       
     }
     if (loading) navigate("/");
@@ -90,10 +91,7 @@ export default function Home({socket}) {
         </header>
         <main>
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 my-3">
-            {
-              JSON.stringify(users)
-            }
-            <h6 className="text-3xl font-bold tracking-tight text-gray-900">Les utilisateurs</h6>
+            <h6 className="text-3xl font-bold tracking-tight text-gray-900">Les utilisateurs </h6>
 
             <div className="flex flex-row">
 

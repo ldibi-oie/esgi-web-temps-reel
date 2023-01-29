@@ -24,6 +24,7 @@ export default function ChatBot({ socket }) {
 
   const responseFooter = (e) => {
     e.preventDefault();
+    var value = messages.at(-1).value
     var p = {
       uid: auth.currentUser.uid,
       name: auth.currentUser.displayName,
@@ -33,7 +34,7 @@ export default function ChatBot({ socket }) {
     setMessages([...messages , p])
     console.log(messages);
 
-    socket.emit("chatbot", message);
+    socket.emit("chatbotFooter", value);
   };
 
   const responseMessage = (value) => {
