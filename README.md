@@ -27,7 +27,7 @@ Commande : docker compose up
 * Rejoindre un groupe de discussion 
 * recevoir des notifications
 
-### User lambda
+### Admin
 * Accepter et refuser une demande de conversation d'un user 
 * gerer les session et les modifier 
 * gerer les users 
